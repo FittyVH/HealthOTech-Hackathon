@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Health Services</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #d6f1e9, #d6e7f3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 3fr 1fr; /* Flexible proportions */
+      width: 90%;
+      height: 90%;
+      max-width: 1200px; /* Prevent over-expansion */
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      overflow: hidden;
+      background-color: #fff; /* Set default background */
+    }
+
+    /* Left Panel */
+    .left-panel {
+      background: linear-gradient(135deg, #2e856e, #51ad9f);
+      color: white;
+      padding: 20px;
+      font-size: 14px;
+      overflow-y: auto;
+    }
+
+    .left-panel h2 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .left-panel ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .left-panel li {
+      margin-bottom: 15px;
+      padding: 15px;
+      background-color: #3f9d8c;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .left-panel li:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Chat Area */
+    .chat-area {
+      background-color: #f4f7f6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, #004e92, #000428);
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-header h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    /* Updated Language Selector Styles */
+    .language-selector select {
+      padding: 5px 10px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 1px solid #004e92;
+      background-color: #004e92;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s;
+    }
+
+    .language-selector select:hover {
+      background-color: #002f5f;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .chat-window {
+      flex: 1;
+      overflow-y: auto;
+      padding: 15px;
+      background-color: #eaf3f2;
+    }
+
+    .chat-input-area {
+      display: flex;
+      padding: 10px;
+      background-color: #ffffff;
+    }
+
+    #chat-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    #send-btn {
+      padding: 10px 20px;
+      background-color: #004e92;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #send-btn:hover {
+      background-color: #002f5f;
+    }
+
+    /* Chatbot interaction styles */
+    .chat-message {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .chat-message.user {
+      background-color: #004e92;
+      color: white;
+      align-self: flex-end;
+    }
+
+    .chat-message.bot {
+      background-color: #eaf3f2;
+      border: 1px solid #ddd;
+      color: black;
+      align-self: flex-start;
+    }
+
+    /* Right Panel */
+    .right-panel {
+      background: linear-gradient(135deg, #ff8f70, #ff3d54);
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .profile-icon {
+      cursor: pointer;
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .profile-icon:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    .profile-details {
+      color: white;
+      display: none;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left Panel -->
+    <div class="left-panel" id="left-panel">
+      <h2 id="health-schemes-title">Health Schemes</h2>
+      <ul id="health-schemes-list">
+        <li onclick="window.open('https://pmjay.gov.in/', '_blank')">
+          <h3>Ayushman Bharat</h3>
+          <p>Deadline: 31st March 2024</p>
+        </li>
+        <li onclick="window.open('https://pmjay.gov.in/', '_blank')">
+          <h3>Jan Arogya Yojana</h3>
+          <p>Deadline: Open-ended</p>
+        </li>
+        <li onclick="window.open('https://pmjay.gov.in/', '_blank')">
+          <h3>Pradhan Mantri Matru Vandana Yojana</h3>
+          <p>Deadline: 30th June 2024</p>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-area">
+      <div class="chat-header">
+        <h1 id="chat-title">Your Health Services</h1>
+        <div class="language-selector">
+          <select id="language-dropdown">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="ta">தமிழ்</option>
+            <option value="bn">বাংলা</option>
+            <option value="te">తెలుగు</option>
+            <option value="mr">मराठी</option>
+            <option value="gu">ગુજરાતી</option>
+            <option value="ml">മലയാളം</option>
+            <option value="pa">ਪੰਜਾਬੀ</option>
+            <option value="kn">ಕನ್ನಡ</option>
+            <option value="or">ଓଡ଼ିଆ</option>
+            <!-- Add other languages -->
+          </select>
+        </div>
+      </div>
+      <div class="chat-window" id="chat-window"></div>
+      <div class="chat-input-area">
+        <textarea id="chat-input" placeholder="Type your message..."></textarea>
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="right-panel">
+      <div class="profile-icon" id="profile-icon">👤</div>
+      <div class="profile-details" id="profile-details">
+        <h3>User Profile</h3>
+        <p><strong>Name:</strong> Rajesh Kumar</p>
+        <p><strong>Phone:</strong> +91-9876543210</p>
+        <p><strong>Address:</strong> Delhi, India</p>
+        <p><strong>Medical History:</strong> Hypertension</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        title: "Your Health Services",
+        schemesTitle: "Health Schemes",
+        schemes: [
+          { name: "Ayushman Bharat", deadline: "31st March 2024" },
+          { name: "Jan Arogya Yojana", deadline: "Open-ended" },
+          { name: "Pradhan Mantri Matru Vandana Yojana", deadline: "30th June 2024" },
+          { name: "Rashtriya Swasthya Bima Yojana", deadline: "31st December 2024" },
+          { name: "National Health Mission", deadline: "Open-ended" }
+        ],
+      },
+      hi: {
+        title: "आपकी स्वास्थ्य सेवाएं",
+        schemesTitle: "स्वास्थ्य योजनाएँ",
+        schemes: [
+          { name: "आयुष्मान भारत", deadline: "31 मार्च 2024" },
+          { name: "जन आरोग्य योजना", deadline: "अवधिहीन" },
+          { name: "प्रधान मंत्री मातृ वंदना योजना", deadline: "30 जून 2024" },
+          { name: "राष्ट्रीय स्वास्थ्य बीमा योजना", deadline: "31 दिसंबर 2024" },
+          { name: "राष्ट्रीय स्वास्थ्य मिशन", deadline: "अवधिहीन" }
+        ],
+      },
+      // Add other languages here
+    };
+
+    const languageDropdown = document.getElementById("language-dropdown");
+    const chatWindow = document.getElementById("chat-window");
+    const chatInput = document.getElementById("chat-input");
+    const sendBtn = document.getElementById("send-btn");
+
+    languageDropdown.addEventListener("change", (event) => {
+      const selectedLanguage = event.target.value;
+      const translation = translations[selectedLanguage];
+      if (!translation) return;
+
+      // Update titles
+      document.getElementById("chat-title").textContent = translation.title;
+      document.getElementById("health-schemes-title").textContent = translation.schemesTitle;
+
+      // Update schemes list
+      const schemesList = document.getElementById("health-schemes-list");
+      schemesList.innerHTML = ""; // Clear existing schemes
+      translation.schemes.forEach((scheme) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<h3>${scheme.name}</h3><p>Deadline: ${scheme.deadline}</p>`;
+        li.addEventListener("click", () => {
+          window.open("https://pmjay.gov.in/", "_blank"); // Adjust link as needed
+        });
+        schemesList.appendChild(li);
+      });
+    });
+
+    sendBtn.addEventListener("click", () => {
+      const userMessage = chatInput.value.trim();
+      if (userMessage) {
+        // Add user message to chat
+        const userMsgElem = document.createElement("div");
+        userMsgElem.className = "chat-message user";
+        userMsgElem.textContent = userMessage;
+        chatWindow.appendChild(userMsgElem);
+
+        // Simulate bot response
+        setTimeout(() => {
+          const botResponse = document.createElement("div");
+          botResponse.className = "chat-message bot";
+          botResponse.textContent = "Thank you for your message. Which Healthcare scheme you would know about ?";
+          chatWindow.appendChild(botResponse);
+          chatWindow.scrollTop = chatWindow.scrollHeight;
+        }, 1000);
+
+        chatInput.value = ""; // Clear the input field
+      }
+    });
+
+    chatInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendBtn.click();
+      }
+    });
+
+    // Profile toggle visibility
+    const profileIcon = document.getElementById("profile-icon");
+    const profileDetails = document.getElementById("profile-details");
+
+    profileIcon.addEventListener("click", () => {
+      if (profileDetails.style.display === "none" || profileDetails.style.display === "") {
+        profileDetails.style.display = "block";
+      } else {
+        profileDetails.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
